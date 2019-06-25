@@ -1,4 +1,6 @@
-require "slack_500/version"
+ require 'rubygems'
+ require 'active_support'
+ require "slack_500/version"
 
 module Slack500
   class Error < StandardError; end
