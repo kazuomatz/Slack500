@@ -11,6 +11,9 @@ The following items are displayed in the Slack message.
 - Error Message
 - Backtrace
 
+<img src="https://user-images.githubusercontent.com/2704723/60082808-7ca71700-976f-11e9-91fd-9dc235b18850.png" width="60%"/>
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
