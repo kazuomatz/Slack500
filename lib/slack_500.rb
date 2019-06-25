@@ -1,9 +1,23 @@
- require 'rubygems'
- require 'active_support'
- require "slack_500/version"
+require 'rubygems'
+require 'active_support'
+require "slack_500/version"
 
 module Slack500
-  class Error < StandardError; end
+
+  class Error < StandardError;
+  end
+
+  ROOT_PATH = File.expand_path "../../", __FILE__
+
+  module ::Rails
+    class Application
+      rake_tasks do
+        Dir[File.join(ROOT_PATH, "/lib/tasks/", "**/*.rake")].each do |file|
+          load file
+        end
+      end
+    end
+  end
 
   def self.setup
     yield self
