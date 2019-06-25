@@ -1,4 +1,4 @@
-namespace :slack_500
+namespace :slack_500 do
   desc 'configuration Slack500'
   task :config do
       file = File.join(Rails.root,'config','initializers','slack_500.rb')
