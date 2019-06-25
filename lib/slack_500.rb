@@ -51,7 +51,7 @@ module Slack500
 
     default_params = {
         pretext: self.pretext,
-        title: self.pretext,
+        title: self.title,
         color: self.color,
         footer: self.footer
     }
