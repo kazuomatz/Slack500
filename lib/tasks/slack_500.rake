@@ -8,7 +8,7 @@ namespace :slack_500 do
       exit unless s[0].downcase == 'y'
     end
     File.open(file,'w') do |file|
-      file.puts("require 'Slack500'")
+      file.puts("require 'slack_500'")
       file.puts("\nSlack500.setup do |config|")
 
       file.puts("\n    # report pretext of slack message")
