@@ -47,7 +47,7 @@ module Slack500
       return
     end
 
-    text = "#{request.method} #{request.url} (#{request.user_agent}) : #{request.query_parameters}\n#{exception.message}\n#{exception.backtrace.map {|s| s.gsub(Rails.root.to_s, '')}.join("\n")}"
+    text = "\n\n:black_small_square:*Request*\n*#{request.method}* #{request.url}\n\n:black_small_square:*User Agent*\n#{request.user_agent}\n\n:black_small_square:*IP*\n#{request.remote_ip}\n\n:black_small_square:*Query*\n#{request.query_parameters}\n\n:black_small_square:*Message*\n#{exception.message}\n\n:black_small_square:*Backtrace*\n#{exception.backtrace.map {|s| "`#{s.gsub('`','').gsub("'",'').gsub(Rails.root.to_s, '')}`"}.join("\n")}"
 
     default_params = {
         pretext: self.pretext,
