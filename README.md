@@ -11,7 +11,7 @@ The following items are displayed in the Slack message.
 - Error Message
 - Backtrace
 
-<img src="https://user-images.githubusercontent.com/2704723/60082808-7ca71700-976f-11e9-91fd-9dc235b18850.png" width="60%"/>
+<img src="https://user-images.githubusercontent.com/2704723/60161177-ee479980-9831-11e9-9861-360ce28ffdef.png" width="70%"/>
 
 
 ## Installation
