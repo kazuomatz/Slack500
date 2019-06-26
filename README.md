@@ -6,7 +6,8 @@ The following items are displayed in the Slack message.
 
 - http method
 - Controller and Action
-- Parameters
+- Query Parameters
+- Remote IP
 - User Agent
 - Error Message
 - Backtrace
