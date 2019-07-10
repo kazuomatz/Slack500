@@ -47,8 +47,45 @@ module Slack500
       return
     end
 
-    text = "\n\n:black_small_square:*Request*\n*#{request.method}* #{request.url}\n\n:black_small_square:*User Agent*\n#{request.user_agent}\n\n:black_small_square:*IP*\n#{request.remote_ip}\n\n:black_small_square:*Query*\n#{request.query_parameters}\n\n:black_small_square:*Message*\n#{exception.message}\n\n:black_small_square:*Backtrace*\n#{exception.backtrace.map {|s| "`#{s.gsub('`','').gsub("'",'').gsub(Rails.root.to_s, '')}`"}.join("\n")}"
+    bullet = ':black_small_square:'
+    text = "#{exception.message}\n\n"
 
+    text += "#{bullet}*Request*\n*#{request.method}* #{request.url}\n\n"
+    text += "#{bullet}*User Agent*\n#{request.user_agent}\n\n"
+    text += "#{bullet}*IP*\n#{request.remote_ip}\n\n"
+    text += "#{bullet}*Query*\n#{request.query_parameters}\n\n" unless request.query_parameters.empty?
+
+    request.body.rewind
+    body_text = request.body.read
+
+    begin
+      if body_text.present?
+        body = JSON.parse(body_text)
+      end
+    rescue => e
+      if body_text.present?
+        body_params = {}
+        body_text.split('&').each do |param|
+          kv = param.split("=")
+          if kv.length == 2
+            if kv[0].downcase.index('token').present? || kv[0].downcase.index('password').present?
+              body_params[URI.decode(kv[0])] = '[** FILTERED **]'
+            elsif kv[0] != 'utf8'
+              body_params[URI.decode(kv[0])] = truncate(URI.decode(kv[1]).force_encoding('UTF-8'),100)
+            end
+          end
+        end
+        if body_params.empty?
+          body = body_text
+        else
+          body = body_params
+        end
+      end
+    end
+
+    text += "#{bullet}*Body*\n#{body}\n\n" unless body.nil?
+    text += "#{bullet}:*Backtrace*\n#{exception.backtrace.map {|s| "`#{s.gsub('`', '').gsub("'", '').gsub(Rails.root.to_s, '')}`"}.join("\n")}"
+    text = text.force_encoding('UTF-8')
     default_params = {
         pretext: self.pretext,
         title: self.title,
@@ -76,4 +113,10 @@ module Slack500
       Rails.logger.error "** Slack500:: #{e.full_message}."
     end
   end
+
+  private
+  def self.truncate(string, max)
+    string.length > max ? "#{string[0...max]}..." : string
+  end
+
 end
