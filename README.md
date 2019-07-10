@@ -7,6 +7,7 @@ The following items are displayed in the Slack message.
 - http method
 - Controller and Action
 - Query Parameters
+- Body Content (Query / JSON )
 - Remote IP
 - User Agent
 - Error Message
