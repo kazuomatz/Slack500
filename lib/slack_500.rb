@@ -84,7 +84,7 @@ module Slack500
     end
 
     text += "#{bullet}*Body*\n#{body}\n\n" unless body.nil?
-    text += "#{bullet}:*Backtrace*\n#{exception.backtrace.map {|s| "`#{s.gsub('`', '').gsub("'", '').gsub(Rails.root.to_s, '')}`"}.join("\n")}"
+    text += "#{bullet}*Backtrace*\n#{exception.backtrace.map {|s| "`#{s.gsub('`', '').gsub("'", '').gsub(Rails.root.to_s, '')}`"}.join("\n")}"
     text = text.force_encoding('UTF-8')
     default_params = {
         pretext: self.pretext,
