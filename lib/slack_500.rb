@@ -69,9 +69,9 @@ module Slack500
           kv = param.split("=")
           if kv.length == 2
             if kv[0].downcase.index('token').present? || kv[0].downcase.index('password').present?
-              body_params[URI.decode(kv[0])] = '[** FILTERED **]'
+              body_params[URI.decode_www_form_component(kv[0])] = '[** FILTERED **]'
             elsif kv[0] != 'utf8'
-              body_params[URI.decode(kv[0])] = truncate(URI.decode(kv[1]).force_encoding('UTF-8'),100)
+              body_params[URI.decode_www_form_component(kv[0])] = truncate(URI.decode_www_form_component(kv[1]).force_encoding('UTF-8'),100)
             end
           end
         end
